@@ -4,4 +4,6 @@
   :author "Tarn W. Burton <twburton@gmail.com>"
   :licence "LGPL-3.0"
   :serial t
-  :components ((:file "packages")))
+  :components ((:file "packages")
+               (:file "interface")
+               (:file "static-vector")))
