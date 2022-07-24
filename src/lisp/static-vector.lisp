@@ -4,7 +4,10 @@
   (blaze/lib:static-vector-double-3-col/+ x y))
 
 (defmethod print-object ((object blaze/lib:static-vector-double-3-col) stream)
-  (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
+  (if *print-readably*
+      (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
+      (print-unreadable-object (object stream :type t)
+        (format stream "~a ~a ~a" (at object 0) (at object 1) (at object 2))))
   object)
 
 (defmethod at ((x blaze/lib:static-vector-double-3-col) i)
@@ -13,18 +16,41 @@
 (defmethod (setf at) (value (x blaze/lib:static-vector-double-3-col) i)
   (blaze/lib:static-vector-double-3-col/setf-at value x i))
 
+(defmethod nanp ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/nanp x))
+
+(defmethod infinitep ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/infinitep x))
+
 (defmethod finitep ((x blaze/lib:static-vector-double-3-col))
   (blaze/lib:static-vector-double-3-col/finitep x))
+
+(defmethod defaultp ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/defaultp x))
+
+(defmethod uniformp ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/uniformp x))
+
+(defmethod zerop ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/zerop x))
 
 (defmethod transpose ((x blaze/lib:static-vector-double-3-col))
   (blaze/lib:static-vector-double-3-col/transpose x))
 
+(defmethod norm ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/norm x))
+
+(defmethod sqr-norm ((x blaze/lib:static-vector-double-3-col))
+  (blaze/lib:static-vector-double-3-col/sqr-norm x))
 
 (defmethod add ((x blaze/lib:static-vector-double-3-row) (y blaze/lib:static-vector-double-3-row))
   (blaze/lib:static-vector-double-3-row/+ x y))
 
 (defmethod print-object ((object blaze/lib:static-vector-double-3-row) stream)
-  (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
+  (if *print-readably*
+      (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
+      (print-unreadable-object (object stream :type t)
+        (format stream "~a ~a ~a" (at object 0) (at object 1) (at object 2))))
   object)
 
 (defmethod at ((x blaze/lib:static-vector-double-3-row) i)
@@ -33,8 +59,30 @@
 (defmethod (setf at) (value (x blaze/lib:static-vector-double-3-row) i)
   (blaze/lib:static-vector-double-3-row/setf-at value x i))
 
+(defmethod nanp ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/nanp x))
+
+(defmethod infinitep ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/infinitep x))
+
 (defmethod finitep ((x blaze/lib:static-vector-double-3-row))
   (blaze/lib:static-vector-double-3-row/finitep x))
 
+(defmethod defaultp ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/defaultp x))
+
+(defmethod uniformp ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/uniformp x))
+
+(defmethod zerop ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/zerop x))
+
 (defmethod transpose ((x blaze/lib:static-vector-double-3-row))
-  (blaze/lib:static-vector-double-3-row/transpose x))    
+  (blaze/lib:static-vector-double-3-row/transpose x))
+
+(defmethod norm ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/norm x))
+
+(defmethod sqr-norm ((x blaze/lib:static-vector-double-3-row))
+  (blaze/lib:static-vector-double-3-row/sqr-norm x))
+  

@@ -1,6 +1,17 @@
 (defpackage :blaze
   (:use :common-lisp)
-  (:export #:add
+  (:shadow #+*
+           #:+
+           #:zerop)
+  (:export #:*
+           #:+
            #:at
+           #:defaultp
            #:finitep
-           #:transpose))
+           #:infinitep
+           #:nanp
+           #:norm
+           #:sqr-norm
+           #:transpose
+           #:uniformp
+           #:zerop))
