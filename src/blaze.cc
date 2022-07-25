@@ -9,6 +9,8 @@ namespace blaze_lib {
 
 typedef blaze::StaticVector<double, 3UL, blaze::columnVector> static_vector_double_3_col;
 typedef blaze::StaticVector<double, 3UL, blaze::rowVector> static_vector_double_3_row;
+typedef blaze::DynamicVector<double, blaze::columnVector> dynamic_column_vector_double;
+typedef blaze::DynamicVector<double, blaze::rowVector> dynamic_row_vector_double;
 
 CL_EXPOSE void blaze_startup() {
   clbind::package_ pkg(blaze_lib_pkg);
@@ -84,6 +86,43 @@ CL_EXPOSE void blaze_startup() {
   pkg.def(
       "*/svd3r-svd3c",
       +[](const static_vector_double_3_row &x, const static_vector_double_3_col &y) { return blaze::evaluate(x * y); });
+
+  clbind::class_<dynamic_column_vector_double>(pkg, "dynamic-column-vector/double")
+      .def_constructor("make-dynamic-column-vector/double", clbind::constructor<unsigned long>())
+      .def_constructor("copy-dynamic-column-vector/double", clbind::constructor<const dynamic_column_vector_double &>());
+
+  pkg.def(
+      "dynamic-column-vector/double/length",
+      +[](const dynamic_column_vector_double &x) { return blaze::size(x); });
+  pkg.def(
+      "dynamic-column-vector/double/+",
+      +[](const dynamic_column_vector_double &x, const dynamic_column_vector_double &y) { return blaze::evaluate(x + y); });
+  pkg.def(
+      "dynamic-column-vector/double/-",
+      +[](const dynamic_column_vector_double &x, const dynamic_column_vector_double &y) { return blaze::evaluate(x - y); });
+  pkg.def(
+      "dynamic-column-vector/double/at", +[](const dynamic_column_vector_double &x, size_t i) { return x[i]; });
+  pkg.def(
+      "dynamic-column-vector/double/setf-at", +[](double value, dynamic_column_vector_double &x, size_t i) { return x[i] = value; });
+  pkg.def(
+      "dynamic-column-vector/double/nanp", +[](const dynamic_column_vector_double &x) { return blaze::isnan(x); });
+  pkg.def(
+      "dynamic-column-vector/double/infinitep", +[](const dynamic_column_vector_double &x) { return blaze::isinf(x); });
+  pkg.def(
+      "dynamic-column-vector/double/finitep", +[](const dynamic_column_vector_double &x) { return blaze::isfinite(x); });
+  pkg.def(
+      "dynamic-column-vector/double/defaultp", +[](const dynamic_column_vector_double &x) { return blaze::isDefault(x); });
+  pkg.def(
+      "dynamic-column-vector/double/uniformp", +[](const dynamic_column_vector_double &x) { return blaze::isUniform(x); });
+  pkg.def(
+      "dynamic-column-vector/double/zerop", +[](const dynamic_column_vector_double &x) { return blaze::isZero(x); });
+  pkg.def(
+      "dynamic-column-vector/double/norm", +[](const dynamic_column_vector_double &x) { return blaze::norm(x); });
+  pkg.def(
+      "dynamic-column-vector/double/sqr-norm", +[](const dynamic_column_vector_double &x) { return blaze::sqrNorm(x); });
+  pkg.def(
+      "dynamic-column-vector/double/transpose",
+      +[](const dynamic_column_vector_double &x) { return blaze::evaluate(blaze::trans(x)); });
 
 }
 
