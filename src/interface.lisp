@@ -1,5 +1,7 @@
 (in-package #:blaze)
 
+(shadow '("ZEROP" "+" "*"))
+
 (defgeneric add (x y))
 
 (defgeneric multiply (x y))
@@ -26,7 +28,7 @@
 
 (defgeneric sqr-norm (x))
 
-#+(or)(defun blaze:+ (&rest args)
+(defun + (&rest args)
   (cond ((cdr args)
          (reduce #'add args))
         (args
@@ -34,11 +36,12 @@
         (t
          0)))
 
-#+(or)(defun blaze:* (&rest args)
+(defun * (&rest args)
   (cond ((null args)
          1)
         ((null (cdr args))
          (car args))
         (t
          (reduce #'multiply args))))
-    
+
+(export '(nanp infinitep finitep defaultp uniformp zerop transpose norm sqr-norm + *))
