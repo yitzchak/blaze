@@ -1,103 +1,5 @@
 (in-package #:blaze)
 
-(defmethod add ((x static-vector-double-3-col) (y static-vector-double-3-col))
-  (static-vector-double-3-col/+ x y))
-
-(defmethod print-object ((object static-vector-double-3-col) stream)
-  (if *print-readably*
-      (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
-      (print-unreadable-object (object stream :type t)
-        (format stream "~a ~a ~a" (at object 0) (at object 1) (at object 2))))
-  object)
-
-(defmethod at ((x static-vector-double-3-col) i)
-  (static-vector-double-3-col/at x i))
-
-(defmethod (setf at) (value (x static-vector-double-3-col) i)
-  (static-vector-double-3-col/setf-at value x i))
-
-(defmethod nanp ((x static-vector-double-3-col))
-  (static-vector-double-3-col/nanp x))
-
-(defmethod infinitep ((x static-vector-double-3-col))
-  (static-vector-double-3-col/infinitep x))
-
-(defmethod finitep ((x static-vector-double-3-col))
-  (static-vector-double-3-col/finitep x))
-
-(defmethod defaultp ((x static-vector-double-3-col))
-  (static-vector-double-3-col/defaultp x))
-
-(defmethod uniformp ((x static-vector-double-3-col))
-  (static-vector-double-3-col/uniformp x))
-
-(defmethod zerop ((x static-vector-double-3-col))
-  (static-vector-double-3-col/zerop x))
-
-(defmethod transpose ((x static-vector-double-3-col))
-  (static-vector-double-3-col/transpose x))
-
-(defmethod norm ((x static-vector-double-3-col))
-  (static-vector-double-3-col/norm x))
-
-(defmethod sqr-norm ((x static-vector-double-3-col))
-  (static-vector-double-3-col/sqr-norm x))
-
-(defmethod sequence:length ((x static-vector-double-3-col))
-  3)
-
-(defmethod sequence:elt ((x static-vector-double-3-col) i)
-  (static-vector-double-3-col/at x i))
-
-(defmethod (setf sequence:elt) (value (x static-vector-double-3-col) i)
-  (static-vector-double-3-col/setf-at value x i))
-
-(defmethod add ((x static-vector-double-3-row) (y static-vector-double-3-row))
-  (static-vector-double-3-row/+ x y))
-
-(defmethod print-object ((object static-vector-double-3-row) stream)
-  (if *print-readably*
-      (format stream "#3V(~a ~a ~a)" (at object 0) (at object 1) (at object 2))
-      (print-unreadable-object (object stream :type t)
-        (format stream "~a ~a ~a" (at object 0) (at object 1) (at object 2))))
-  object)
-
-(defmethod at ((x static-vector-double-3-row) i)
-  (static-vector-double-3-row/at x i))
-
-(defmethod (setf at) (value (x static-vector-double-3-row) i)
-  (static-vector-double-3-row/setf-at value x i))
-
-(defmethod nanp ((x static-vector-double-3-row))
-  (static-vector-double-3-row/nanp x))
-
-(defmethod infinitep ((x static-vector-double-3-row))
-  (static-vector-double-3-row/infinitep x))
-
-(defmethod finitep ((x static-vector-double-3-row))
-  (static-vector-double-3-row/finitep x))
-
-(defmethod defaultp ((x static-vector-double-3-row))
-  (static-vector-double-3-row/defaultp x))
-
-(defmethod uniformp ((x static-vector-double-3-row))
-  (static-vector-double-3-row/uniformp x))
-
-(defmethod zerop ((x static-vector-double-3-row))
-  (static-vector-double-3-row/zerop x))
-
-(defmethod transpose ((x static-vector-double-3-row))
-  (static-vector-double-3-row/transpose x))
-
-(defmethod norm ((x static-vector-double-3-row))
-  (static-vector-double-3-row/norm x))
-
-(defmethod sqr-norm ((x static-vector-double-3-row))
-  (static-vector-double-3-row/sqr-norm x))
-
-(defmethod sequence:length ((x static-vector-double-3-row))
-  3)
-
 
 (defmethod add ((x dynamic-column-vector/double) (y dynamic-column-vector/double))
   (dynamic-column-vector/double/+ x y))
@@ -221,6 +123,19 @@
 
 (defmethod (setf sequence:elt) (value (x dynamic-row-vector/double) i)
   (dynamic-row-vector/double/setf-at value x i))
+
+
+(defmethod multiply ((x number) (y dynamic-column-vector/double))
+  (multiply/d/dcd x y))
+
+(defmethod multiply ((x dynamic-column-vector/double) (y number))
+  (multiply/dcd/d x y))
+
+(defmethod multiply ((x number) (y dynamic-row-vector/double))
+  (multiply/d/dcd x y))
+
+(defmethod multiply ((x dynamic-row-vector/double) (y number))
+  (multiply/dcd/d x y))
 
 (defmethod multiply ((x dynamic-row-vector/double) (y dynamic-column-vector/double))
   (multiply/drd/dcd x y))
