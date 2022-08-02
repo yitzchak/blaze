@@ -1,10 +1,18 @@
 (in-package #:blaze)
 
-(shadow '("ZEROP" "+" "*"))
+(shadow '("ZEROP" "+" "-" "*"))
 
 (defgeneric add (x y))
 
+(defgeneric negate (x))
+
+(defgeneric subtract (x y))
+
 (defgeneric multiply (x y))
+
+(defgeneric cross (x y))
+
+(defgeneric dot (x y))
 
 (defgeneric nanp (x))
 
@@ -48,4 +56,4 @@
         (t
          (reduce #'multiply args))))
 
-(export '(nanp infinitep finitep defaultp uniformp zerop transpose norm sqr-norm + *))
+(export '(nanp infinitep finitep defaultp uniformp zerop transpose norm sqr-norm dot cross + - *))

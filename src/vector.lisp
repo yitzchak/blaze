@@ -160,6 +160,24 @@
 (defmethod add ((x dense-real-row-vector-double) (y dense-real-row-vector-double))
   (add@drrv2@drrv2 x y))
 
+(defmethod add ((x dense-complex-column-vector-double) (y dense-real-column-vector-double))
+  (add@dccv2@drcv2 x y))
+
+(defmethod add ((x dense-complex-row-vector-double) (y dense-real-row-vector-double))
+  (add@dcrv2@drrv2 x y))
+
+(defmethod add ((x dense-real-column-vector-double) (y dense-complex-column-vector-double))
+  (add@dccv2@drcv2 x y))
+
+(defmethod add ((x dense-real-row-vector-double) (y dense-complex-row-vector-double))
+  (add@dcrv2@drrv2 x y))
+
+(defmethod add ((x dense-complex-column-vector-double) (y dense-complex-column-vector-double))
+  (add@dccv2@dccv2 x y))
+
+(defmethod add ((x dense-complex-row-vector-double) (y dense-complex-row-vector-double))
+  (add@dcrv2@dcrv2 x y))
+
 (defmethod multiply ((x number) (y dense-real-column-vector-double))
   (multiply@2@drcv2 x y))
 
