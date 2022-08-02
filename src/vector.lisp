@@ -1,6 +1,6 @@
 (in-package #:blaze)
 
-(defmethod print-object ((object dynamic-column-vector-double) stream)
+(defmethod print-object ((object dense-real-column-vector-double) stream)
   (if *print-readably*
       (loop for i below (length object)
             finally (write-char #\) stream)
@@ -16,7 +16,7 @@
               do (write (elt object i) :stream stream))))
   object)
 
-(defmethod print-object ((object dynamic-row-vector-double) stream)
+(defmethod print-object ((object dense-real-row-vector-double) stream)
   (if *print-readably*
       (loop for i below (length object)
             finally (write-char #\) stream)
@@ -32,7 +32,7 @@
               do (write (elt object i) :stream stream))))
   object)
 
-(defmethod print-object ((object dynamic-column-vector-complex-double) stream)
+(defmethod print-object ((object dense-complex-column-vector-double) stream)
   (if *print-readably*
       (loop for i below (length object)
             finally (write-char #\) stream)
@@ -48,7 +48,7 @@
               do (write (elt object i) :stream stream))))
   object)
 
-(defmethod print-object ((object dynamic-row-vector-complex-double) stream)
+(defmethod print-object ((object dense-complex-row-vector-double) stream)
   (if *print-readably*
       (loop for i below (length object)
             finally (write-char #\) stream)
@@ -64,130 +64,118 @@
               do (write (elt object i) :stream stream))))
   object)
 
-(defmethod at ((x dynamic-column-vector-double) i)
-  (dynamic-column-vector-double/at x i))
+(defmethod nanp ((x dense-real-column-vector-double))
+  (nanp@drcv2 x))
 
-(defmethod at ((x dynamic-row-vector-double) i)
-  (dynamic-row-vector-double/at x i))
+(defmethod nanp ((x dense-real-row-vector-double))
+  (nanp@drrv2 x))
 
-(defmethod (setf at) (value (x dynamic-column-vector-double) i)
-  (dynamic-column-vector-double/setf-at value x i))
+(defmethod infinitep ((x dense-real-column-vector-double))
+  (infinitep@drcv2 x))
 
-(defmethod (setf at) (value (x dynamic-row-vector-double) i)
-  (dynamic-row-vector-double/setf-at value x i))
+(defmethod infinitep ((x dense-real-row-vector-double))
+  (infinitep@drrv2 x))
 
-(defmethod nanp ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/nanp x))
+(defmethod finitep ((x dense-real-column-vector-double))
+  (finitep@drcv2 x))
 
-(defmethod nanp ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/nanp x))
+(defmethod finitep ((x dense-real-row-vector-double))
+  (finitep@drrv2 x))
 
-(defmethod infinitep ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/infinitep x))
+(defmethod defaultp ((x dense-real-column-vector-double))
+  (defaultp@drcv2 x))
 
-(defmethod infinitep ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/infinitep x))
+(defmethod defaultp ((x dense-real-row-vector-double))
+  (defaultp@drrv2 x))
 
-(defmethod finitep ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/finitep x))
+(defmethod uniformp ((x dense-real-column-vector-double))
+  (uniformp@drcv2 x))
 
-(defmethod finitep ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/finitep x))
+(defmethod uniformp ((x dense-real-row-vector-double))
+  (uniformp@drrv2 x))
 
-(defmethod defaultp ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/defaultp x))
+(defmethod zerop ((x dense-real-column-vector-double))
+  (zerop@drcv2 x))
 
-(defmethod defaultp ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/defaultp x))
+(defmethod zerop ((x dense-real-row-vector-double))
+  (zerop@drrv2 x))
 
-(defmethod uniformp ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/uniformp x))
+(defmethod transpose ((x dense-real-column-vector-double))
+  (transpose@drcv2 x))
 
-(defmethod uniformp ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/uniformp x))
+(defmethod transpose ((x dense-real-row-vector-double))
+  (transpose@drrv2 x))
 
-(defmethod zerop ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/zerop x))
+(defmethod norm ((x dense-real-column-vector-double))
+  (norm@drcv2 x))
 
-(defmethod zerop ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/zerop x))
+(defmethod norm ((x dense-real-row-vector-double))
+  (norm@drrv2 x))
 
-(defmethod transpose ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/transpose x))
+(defmethod sqr-norm ((x dense-real-column-vector-double))
+  (sqr-norm@drcv2 x))
 
-(defmethod transpose ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/transpose x))
+(defmethod sqr-norm ((x dense-real-row-vector-double))
+  (sqr-norm@drrv2 x))
 
-(defmethod norm ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/norm x))
+(defmethod sequence:length ((x dense-real-column-vector-double))
+  (length@drcv2 x))
 
-(defmethod norm ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/norm x))
+(defmethod sequence:length ((x dense-real-row-vector-double))
+  (length@drrv2 x))
 
-(defmethod sqr-norm ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/sqr-norm x))
+(defmethod sequence:length ((x dense-complex-column-vector-double))
+  (length@dccv2 x))
 
-(defmethod sqr-norm ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/sqr-norm x))
+(defmethod sequence:length ((x dense-complex-row-vector-double))
+  (length@dcrv2 x))
 
-(defmethod sequence:length ((x dynamic-column-vector-double))
-  (dynamic-column-vector-double/length x))
+(defmethod sequence:elt ((x dense-real-column-vector-double) i)
+  (elt@drcv2 x i))
 
-(defmethod sequence:length ((x dynamic-row-vector-double))
-  (dynamic-row-vector-double/length x))
+(defmethod sequence:elt ((x dense-real-row-vector-double) i)
+  (elt@drrv2 x i))
 
-(defmethod sequence:length ((x dynamic-column-vector-complex-double))
-  (dynamic-column-vector-complex-double/length x))
+(defmethod sequence:elt ((x dense-complex-column-vector-double) i)
+  (elt@dccv2 x i))
 
-(defmethod sequence:length ((x dynamic-row-vector-complex-double))
-  (dynamic-row-vector-complex-double/length x))
+(defmethod sequence:elt ((x dense-complex-row-vector-double) i)
+  (elt@dcrv2 x i))
 
-(defmethod sequence:elt ((x dynamic-column-vector-double) i)
-  (dynamic-column-vector-double/at x i))
+(defmethod (setf sequence:elt) (value (x dense-real-column-vector-double) i)
+  (setf-elt@drcv2 value x i))
 
-(defmethod sequence:elt ((x dynamic-row-vector-double) i)
-  (dynamic-row-vector-double/at x i))
+(defmethod (setf sequence:elt) (value (x dense-real-row-vector-double) i)
+  (setf-elt@drrv2 value x i))
 
-(defmethod sequence:elt ((x dynamic-column-vector-complex-double) i)
-  (dynamic-column-vector-complex-double/at x i))
+(defmethod (setf sequence:elt) (value (x dense-complex-column-vector-double) i)
+  (setf-elt@dccv2 value x i))
 
-(defmethod sequence:elt ((x dynamic-row-vector-complex-double) i)
-  (dynamic-row-vector-complex-double/at x i))
+(defmethod (setf sequence:elt) (value (x dense-complex-row-vector-double) i)
+  (setf-elt@dcrv2 value x i))
 
-(defmethod (setf sequence:elt) (value (x dynamic-column-vector-double) i)
-  (dynamic-column-vector-double/setf-at value x i))
+(defmethod add ((x dense-real-column-vector-double) (y dense-real-column-vector-double))
+  (add@drcv2@drcv2 x y))
 
-(defmethod (setf sequence:elt) (value (x dynamic-row-vector-double) i)
-  (dynamic-row-vector-double/setf-at value x i))
+(defmethod add ((x dense-real-row-vector-double) (y dense-real-row-vector-double))
+  (add@drrv2@drrv2 x y))
 
-(defmethod (setf sequence:elt) (value (x dynamic-column-vector-complex-double) i)
-  (dynamic-column-vector-complex-double/setf-at value x i))
+(defmethod multiply ((x number) (y dense-real-column-vector-double))
+  (multiply@2@drcv2 x y))
 
-(defmethod (setf sequence:elt) (value (x dynamic-row-vector-complex-double) i)
-  (dynamic-row-vector-complex-double/setf-at value x i))
+(defmethod multiply ((x dense-real-column-vector-double) (y number))
+  (multiply@2@drcv2 x y))
 
-(defmethod add ((x dynamic-column-vector-double) (y dynamic-column-vector-double))
-  (dynamic-column-vector-double/+ x y))
+(defmethod multiply ((x number) (y dense-real-row-vector-double))
+  (multiply@2@drrv2 x y))
 
-(defmethod add ((x dynamic-row-vector-double) (y dynamic-row-vector-double))
-  (dynamic-row-vector-double/+ x y))
+(defmethod multiply ((x dense-real-row-vector-double) (y number))
+  (multiply@2@drrv2 x y))
 
-(defmethod multiply ((x number) (y dynamic-column-vector-double))
-  (multiply/d/dcd x y))
+(defmethod multiply ((x dense-real-row-vector-double) (y dense-real-column-vector-double))
+  (multiply@drrv2@drcv2 x y))
 
-(defmethod multiply ((x dynamic-column-vector-double) (y number))
-  (multiply/dcd/d x y))
-
-(defmethod multiply ((x number) (y dynamic-row-vector-double))
-  (multiply/d/dcd x y))
-
-(defmethod multiply ((x dynamic-row-vector-double) (y number))
-  (multiply/dcd/d x y))
-
-(defmethod multiply ((x dynamic-row-vector-double) (y dynamic-column-vector-double))
-  (multiply/drd/dcd x y))
-
-(defmethod multiply ((x dynamic-column-vector-double) (y dynamic-row-vector-double))
-  (multiply/dcd/drd x y))
+(defmethod multiply ((x dense-real-column-vector-double) (y dense-real-row-vector-double))
+  (multiply@drcv2@drrv2 x y))
 
   

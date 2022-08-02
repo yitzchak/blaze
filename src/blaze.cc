@@ -7,39 +7,54 @@ NAMESPACE_PACKAGE_ASSOCIATION(blaze_ns, blaze_pkg, "BLAZE");
 
 namespace blaze_ns {
 
-typedef blaze::DynamicVector<double, blaze::columnVector> dynamic_column_vector_double;
-typedef blaze::DynamicVector<double, blaze::rowVector> dynamic_row_vector_double;
-typedef blaze::DynamicVector<std::complex<double>, blaze::columnVector> dynamic_column_vector_complex_double;
-typedef blaze::DynamicVector<std::complex<double>, blaze::rowVector> dynamic_row_vector_complex_double;
-typedef blaze::DynamicMatrix<double, blaze::columnMajor> dynamic_column_matrix_double;
-typedef blaze::DynamicMatrix<double, blaze::rowMajor> dynamic_row_matrix_double;
-typedef blaze::DynamicMatrix<std::complex<double>, blaze::columnMajor> dynamic_column_matrix_complex_double;
-typedef blaze::DynamicMatrix<std::complex<double>, blaze::rowMajor> dynamic_row_matrix_complex_double;
+typedef blaze::DynamicVector<double, blaze::columnVector> drcv2;
+typedef blaze::DynamicVector<double, blaze::rowVector> drrv2;
+typedef blaze::DynamicVector<std::complex<double>, blaze::columnVector> dccv2;
+typedef blaze::DynamicVector<std::complex<double>, blaze::rowVector> dcrv2;
+typedef blaze::DynamicMatrix<double, blaze::columnMajor> drcm2;
+typedef blaze::DynamicMatrix<double, blaze::rowMajor> drrm2;
+typedef blaze::DynamicMatrix<std::complex<double>, blaze::columnMajor> dccm2;
+typedef blaze::DynamicMatrix<std::complex<double>, blaze::rowMajor> dcrm2;
 
 CL_EXPOSE void blaze_startup() {
   clbind::package_ pkg(blaze_pkg);
 
-  clbind::class_<dynamic_column_vector_double>(pkg, "dynamic-column-vector-double")
-      .def_constructor("make-dynamic-column-vector-double", clbind::constructor<unsigned long>())
-      .def_constructor("copy-dynamic-column-vector-double", clbind::constructor<const dynamic_column_vector_double &>());
+  clbind::class_<drcv2>(pkg, "dense-real-column-vector-double")
+      .def_constructor("make-dense-real-column-vector-double", clbind::constructor<unsigned long>())
+      .def_constructor("copy-dense-real-column-vector-double", clbind::constructor<const drcv2 &>());
 
-  clbind::class_<dynamic_row_vector_double>(pkg, "dynamic-row-vector-double")
-      .def_constructor("make-dynamic-row-vector-double", clbind::constructor<unsigned long>())
-      .def_constructor("copy-dynamic-row-vector-double", clbind::constructor<const dynamic_row_vector_double &>());
+  clbind::class_<drrv2>(pkg, "dense-real-row-vector-double")
+      .def_constructor("make-dense-real-row-vector-double", clbind::constructor<unsigned long>())
+      .def_constructor("copy-dense-real-row-vector-double", clbind::constructor<const drrv2 &>());
 
-  clbind::class_<dynamic_column_vector_complex_double>(pkg, "dynamic-column-vector-complex-double")
-      .def_constructor("make-dynamic-column-vector-complex-double", clbind::constructor<unsigned long>())
-      .def_constructor("copy-dynamic-column-vector-complex-double",
-                       clbind::constructor<const dynamic_column_vector_complex_double &>());
+  clbind::class_<dccv2>(pkg, "dense-complex-column-vector-double")
+      .def_constructor("make-dense-complex-column-vector-double", clbind::constructor<unsigned long>())
+      .def_constructor("copy-dense-complex-column-vector-double", clbind::constructor<const dccv2 &>());
 
-  clbind::class_<dynamic_row_vector_complex_double>(pkg, "dynamic-row-vector-complex-double")
-      .def_constructor("make-dynamic-row-vector-complex-double", clbind::constructor<unsigned long>())
-      .def_constructor("copy-dynamic-row-vector-complex-double", clbind::constructor<const dynamic_row_vector_complex_double &>());
+  clbind::class_<dcrv2>(pkg, "dense-complex-row-vector-double")
+      .def_constructor("make-dense-complex-row-vector-double", clbind::constructor<unsigned long>())
+      .def_constructor("copy-dense-complex-row-vector-double", clbind::constructor<const dcrv2 &>());
+
+  clbind::class_<drcm2>(pkg, "dense-real-column-matrix-double")
+      .def_constructor("make-dense-real-column-matrix-double", clbind::constructor<unsigned long, unsigned long>())
+      .def_constructor("copy-dense-real-column-matrix-double", clbind::constructor<const drcm2 &>());
+
+  clbind::class_<drrm2>(pkg, "dense-real-row-matrix-double")
+      .def_constructor("make-dense-real-row-matrix-double", clbind::constructor<unsigned long, unsigned long>())
+      .def_constructor("copy-dense-real-row-matrix-double", clbind::constructor<const drrm2 &>());
+
+  clbind::class_<dccm2>(pkg, "dense-complex-column-matrix-double")
+      .def_constructor("make-dense-complex-column-matrix-double", clbind::constructor<unsigned long, unsigned long>())
+      .def_constructor("copy-dense-complex-column-matrix-double", clbind::constructor<const dccm2 &>());
+
+  clbind::class_<dcrm2>(pkg, "dense-complex-row-matrix-double")
+      .def_constructor("make-dense-complex-row-matrix-double", clbind::constructor<unsigned long, unsigned long>())
+      .def_constructor("copy-dense-complex-row-matrix-double", clbind::constructor<const dcrm2 &>());
 
   pkg.def(
-      "dynamic-column-vector-double",
+      "dense-real-column-vector-double",
       +[](core::Vaslist_sp args) {
-        dynamic_column_vector_double res = dynamic_column_vector_double(args->total_nargs());
+        drcv2 res = drcv2(args->total_nargs());
         for (size_t i = 0; args->remaining_nargs() > 0; i++) {
           res[i] = core::clasp_to_double(args->next_arg());
         }
@@ -48,9 +63,9 @@ CL_EXPOSE void blaze_startup() {
       "(core:&va-rest args)"_ll);
 
   pkg.def(
-      "dynamic-row-vector-double",
+      "dense-real-row-vector-double",
       +[](core::Vaslist_sp args) {
-        dynamic_row_vector_double res = dynamic_row_vector_double(args->total_nargs());
+        drrv2 res = drrv2(args->total_nargs());
         for (size_t i = 0; args->remaining_nargs() > 0; i++) {
           res[i] = core::clasp_to_double(args->next_arg());
         }
@@ -59,9 +74,9 @@ CL_EXPOSE void blaze_startup() {
       "(core:&va-rest args)"_ll);
 
   pkg.def(
-      "dynamic-column-vector-complex-double",
+      "dense-complex-column-vector-double",
       +[](core::Vaslist_sp args) {
-        dynamic_column_vector_complex_double res = dynamic_column_vector_complex_double(args->total_nargs());
+        dccv2 res = dccv2(args->total_nargs());
         for (size_t i = 0; args->remaining_nargs() > 0; i++) {
           res[i] = core::clasp_to_double(args->next_arg());
         }
@@ -70,9 +85,9 @@ CL_EXPOSE void blaze_startup() {
       "(core:&va-rest args)"_ll);
 
   pkg.def(
-      "dynamic-row-vector-complex-double",
+      "dense-complex-row-vector-double",
       +[](core::Vaslist_sp args) {
-        dynamic_row_vector_complex_double res = dynamic_row_vector_complex_double(args->total_nargs());
+        dcrv2 res = dcrv2(args->total_nargs());
         for (size_t i = 0; args->remaining_nargs() > 0; i++) {
           res[i] = core::clasp_to_double(args->next_arg());
         }
@@ -81,137 +96,100 @@ CL_EXPOSE void blaze_startup() {
       "(core:&va-rest args)"_ll);
 
   pkg.def(
-      "dynamic-column-vector-double/length", +[](const dynamic_column_vector_double &x) { return blaze::size(x); },
-      clbind::noAutoExport());
+      "length@drcv2", +[](const drcv2 &x) { return blaze::size(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/length", +[](const dynamic_row_vector_double &x) { return blaze::size(x); },
-      clbind::noAutoExport());
+      "length@drrv2", +[](const drrv2 &x) { return blaze::size(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-column-vector-complex-double/length", +[](const dynamic_column_vector_complex_double &x) { return blaze::size(x); },
-      clbind::noAutoExport());
+      "length@dcvc2", +[](const dccv2 &x) { return blaze::size(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-complex-double/length", +[](const dynamic_row_vector_complex_double &x) { return blaze::size(x); },
-      clbind::noAutoExport());
+      "length@drvc2", +[](const dcrv2 &x) { return blaze::size(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/at", +[](const dynamic_column_vector_double &x, size_t i) { return x[i]; },
-      clbind::noAutoExport());
+      "elt@drcv2", +[](const drcv2 &x, size_t i) { return x[i]; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/at", +[](const dynamic_row_vector_double &x, size_t i) { return x[i]; }, clbind::noAutoExport());
+      "elt@drrv2", +[](const drrv2 &x, size_t i) { return x[i]; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-column-vector-complex-double/at", +[](const dynamic_column_vector_complex_double &x, size_t i) { return x[i]; },
-      clbind::noAutoExport());
+      "elt@dccv2", +[](const dccv2 &x, size_t i) { return x[i]; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-complex-double/at", +[](const dynamic_row_vector_complex_double &x, size_t i) { return x[i]; },
-      clbind::noAutoExport());
+      "elt@dcrv2", +[](const dcrv2 &x, size_t i) { return x[i]; }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/setf-at", +[](double value, dynamic_column_vector_double &x, size_t i) { return x[i] = value; },
-      clbind::noAutoExport());
+      "setf-elt@drcv2", +[](double value, drcv2 &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/setf-at", +[](double value, dynamic_row_vector_double &x, size_t i) { return x[i] = value; },
-      clbind::noAutoExport());
+      "setf-elt@drrv2", +[](double value, drrv2 &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-column-vector-complex-double/setf-at",
-      +[](double value, dynamic_column_vector_complex_double &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
+      "setf-elt@dccv2", +[](double value, dccv2 &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-complex-double/setf-at",
-      +[](double value, dynamic_row_vector_complex_double &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
+      "setf-elt@dcrv2", +[](double value, dcrv2 &x, size_t i) { return x[i] = value; }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/nanp", +[](const dynamic_column_vector_double &x) { return blaze::isnan(x); },
-      clbind::noAutoExport());
+      "nanp@drcv2", +[](const drcv2 &x) { return blaze::isnan(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/nanp", +[](const dynamic_row_vector_double &x) { return blaze::isnan(x); },
-      clbind::noAutoExport());
+      "nanp@drrv2", +[](const drrv2 &x) { return blaze::isnan(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/infinitep", +[](const dynamic_column_vector_double &x) { return blaze::isinf(x); },
-      clbind::noAutoExport());
+      "infinitep@drcv2", +[](const drcv2 &x) { return blaze::isinf(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/infinitep", +[](const dynamic_row_vector_double &x) { return blaze::isinf(x); },
-      clbind::noAutoExport());
+      "infinitep@drrv2", +[](const drrv2 &x) { return blaze::isinf(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/finitep", +[](const dynamic_column_vector_double &x) { return blaze::isfinite(x); },
-      clbind::noAutoExport());
+      "finitep@drcv2", +[](const drcv2 &x) { return blaze::isfinite(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/finitep", +[](const dynamic_row_vector_double &x) { return blaze::isfinite(x); },
-      clbind::noAutoExport());
+      "finitep@drrv2", +[](const drrv2 &x) { return blaze::isfinite(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/defaultp", +[](const dynamic_column_vector_double &x) { return blaze::isDefault(x); },
-      clbind::noAutoExport());
+      "defaultp@drcv2", +[](const drcv2 &x) { return blaze::isDefault(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/defaultp", +[](const dynamic_row_vector_double &x) { return blaze::isDefault(x); },
-      clbind::noAutoExport());
+      "defaultp@drrv2", +[](const drrv2 &x) { return blaze::isDefault(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/uniformp", +[](const dynamic_column_vector_double &x) { return blaze::isUniform(x); },
-      clbind::noAutoExport());
+      "uniformp@drcv2", +[](const drcv2 &x) { return blaze::isUniform(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/uniformp", +[](const dynamic_row_vector_double &x) { return blaze::isUniform(x); },
-      clbind::noAutoExport());
+      "uniformp@drrv2", +[](const drrv2 &x) { return blaze::isUniform(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/zerop", +[](const dynamic_column_vector_double &x) { return blaze::isZero(x); },
-      clbind::noAutoExport());
+      "zerop@drcv2", +[](const drcv2 &x) { return blaze::isZero(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/zerop", +[](const dynamic_row_vector_double &x) { return blaze::isZero(x); },
-      clbind::noAutoExport());
+      "zerop@drrv2", +[](const drrv2 &x) { return blaze::isZero(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/norm", +[](const dynamic_column_vector_double &x) { return blaze::norm(x); },
-      clbind::noAutoExport());
+      "norm@drcv2", +[](const drcv2 &x) { return blaze::norm(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/norm", +[](const dynamic_row_vector_double &x) { return blaze::norm(x); }, clbind::noAutoExport());
+      "norm@drrv2", +[](const drrv2 &x) { return blaze::norm(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/sqr-norm", +[](const dynamic_column_vector_double &x) { return blaze::sqrNorm(x); },
-      clbind::noAutoExport());
+      "sqr-norm@drcv2", +[](const drcv2 &x) { return blaze::sqrNorm(x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/sqr-norm", +[](const dynamic_row_vector_double &x) { return blaze::sqrNorm(x); },
-      clbind::noAutoExport());
+      "sqr-norm@drrv2", +[](const drrv2 &x) { return blaze::sqrNorm(x); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/transpose",
-      +[](const dynamic_column_vector_double &x) { return blaze::evaluate(blaze::trans(x)); }, clbind::noAutoExport());
+      "transpose@drcv2", +[](const drcv2 &x) { return blaze::evaluate(blaze::trans(x)); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/transpose", +[](const dynamic_row_vector_double &x) { return blaze::evaluate(blaze::trans(x)); },
-      clbind::noAutoExport());
+      "transpose@drrv2", +[](const drrv2 &x) { return blaze::evaluate(blaze::trans(x)); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/+",
-      +[](const dynamic_column_vector_double &x, const dynamic_column_vector_double &y) { return blaze::evaluate(x + y); },
-      clbind::noAutoExport());
+      "add@drcv2d@drcv2", +[](const drcv2 &x, const drcv2 &y) { return blaze::evaluate(x + y); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/+",
-      +[](const dynamic_row_vector_double &x, const dynamic_row_vector_double &y) { return blaze::evaluate(x + y); },
-      clbind::noAutoExport());
+      "add@drrv2d@drrv2", +[](const drrv2 &x, const drrv2 &y) { return blaze::evaluate(x + y); }, clbind::noAutoExport());
 
   pkg.def(
-      "dynamic-column-vector-double/-",
-      +[](const dynamic_column_vector_double &x, const dynamic_column_vector_double &y) { return blaze::evaluate(x - y); },
-      clbind::noAutoExport());
+      "negate@drcv2d", +[](const drcv2 &x) { return blaze::evaluate(-x); }, clbind::noAutoExport());
   pkg.def(
-      "dynamic-row-vector-double/-",
-      +[](const dynamic_row_vector_double &x, const dynamic_row_vector_double &y) { return blaze::evaluate(x - y); },
-      clbind::noAutoExport());
+      "negate@drrv2d", +[](const drrv2 &x) { return blaze::evaluate(-x); }, clbind::noAutoExport());
 
   pkg.def(
-      "multiply/d/dcd", +[](double x, const dynamic_column_vector_double &y) { return blaze::evaluate(x * y); },
-      clbind::noAutoExport());
+      "subtract@drcv2d@drcv2", +[](const drcv2 &x, const drcv2 &y) { return blaze::evaluate(x - y); }, clbind::noAutoExport());
   pkg.def(
-      "multiply/d/drd", +[](double x, const dynamic_row_vector_double &y) { return blaze::evaluate(x * y); },
-      clbind::noAutoExport());
+      "subtract@drrv2d@drrv2", +[](const drrv2 &x, const drrv2 &y) { return blaze::evaluate(x - y); }, clbind::noAutoExport());
+
   pkg.def(
-      "multiply/drd/dcd",
-      +[](const dynamic_row_vector_double &x, const dynamic_column_vector_double &y) { return blaze::evaluate(x * y); },
-      clbind::noAutoExport());
+      "multiply@2@drcv2", +[](double x, const drcv2 &y) { return blaze::evaluate(x * y); }, clbind::noAutoExport());
   pkg.def(
-      "multiply/dcd/drd",
-      +[](const dynamic_column_vector_double &x, const dynamic_row_vector_double &y) { return blaze::evaluate(x * y); },
-      clbind::noAutoExport());
+      "multiply@2@drrv2", +[](double x, const drrv2 &y) { return blaze::evaluate(x * y); }, clbind::noAutoExport());
+  pkg.def(
+      "multiply@drrv2@drcv2", +[](const drrv2 &x, const drcv2 &y) { return blaze::evaluate(x * y); }, clbind::noAutoExport());
+  pkg.def(
+      "multiply@drcv2@drrv2", +[](const drcv2 &x, const drrv2 &y) { return blaze::evaluate(x * y); }, clbind::noAutoExport());
 }
 
 } // namespace blaze_ns

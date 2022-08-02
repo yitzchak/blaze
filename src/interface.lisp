@@ -6,10 +6,6 @@
 
 (defgeneric multiply (x y))
 
-(defgeneric at (x i))
-
-(defgeneric (setf at) (value x i))
-
 (defgeneric nanp (x))
 
 (defgeneric infinitep (x))
@@ -33,6 +29,14 @@
          (reduce #'add args))
         (args
          (car args))
+        (t
+         0)))
+
+(defun - (&rest args)
+  (cond ((cdr args)
+         (reduce #'subtract args))
+        (args
+         (negate (car args)))
         (t
          0)))
 
